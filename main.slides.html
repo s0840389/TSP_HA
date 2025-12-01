@@ -7443,6 +7443,7 @@ main {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="TSP-Lecture---HA-Models">TSP Lecture - HA Models<a class="anchor-link" href="#TSP-Lecture---HA-Models">¶</a></h1><p>Jamie Lenney</p>
 <p>Dec 2025</p>
+<p>Code/slides: <a href="https://github.com/s0840389/TSP_HA">https://github.com/s0840389/TSP_HA</a></p>
 </div>
 </div>
 </div>
@@ -7463,7 +7464,7 @@ main {
 <li><p>Examine the properties of a Hugget model</p>
 </li>
 </ul>
-<p><strong>Further reading</strong> - Ljungqvist and Sargent Recursive Macroeconmic Theroy chapters: 17,18</p>
+<p><strong>Further reading</strong> - Ljungqvist and Sargent Recursive Macroeconmic Theory chapters: 17,18</p>
 </div>
 </div>
 </div>
@@ -7571,10 +7572,10 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Constraints">Constraints<a class="anchor-link" href="#Constraints">¶</a></h2><h4 id="Budget-Constraint">Budget Constraint<a class="anchor-link" href="#Budget-Constraint">¶</a></h4><p>$$c_t + a_{t+1} = (1+r)a_t + z_t w_t$$</p>
+<h2 id="Constraints">Constraints<a class="anchor-link" href="#Constraints">¶</a></h2><h4 id="Budget-Constraint">Budget Constraint<a class="anchor-link" href="#Budget-Constraint">¶</a></h4><p>$$c_t + a_{t+1} = (1+r_t)a_t + \underbrace{z_t w_t}_{y_t}$$</p>
 <ul>
 <li>$a_t$ = assets at beginning of period $t$</li>
-<li>$r$ = interest rate</li>
+<li>$r_t$ = interest rate</li>
 <li>$w_t z_t$ = labor income (stochastic)</li>
 </ul>
 <h4 id="Borrowing-Constraint">Borrowing Constraint<a class="anchor-link" href="#Borrowing-Constraint">¶</a></h4><p>$$a_{t+1} \geq \underline{a}$$</p>
@@ -7593,7 +7594,7 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Natural-borrowing-constraint">Natural borrowing constraint<a class="anchor-link" href="#Natural-borrowing-constraint">¶</a></h3><p>Under worst case scenario need to be able to afford interest payments</p>
-<p>$\underline{a}=\frac{w_{low}z_{low}}{r_{high}}$</p>
+<p>$$\underline{a}=\frac{w_{low}z_{low}}{r_{high}}$$</p>
 </div>
 </div>
 </div>
@@ -7604,12 +7605,12 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Income-Process">Income Process<a class="anchor-link" href="#Income-Process">¶</a></h3><h4 id="Stochastic-Income">Stochastic Income<a class="anchor-link" href="#Stochastic-Income">¶</a></h4><p>Labor income follows a Markov process:</p>
-<p>$$\log y_t = \rho \log y_{t-1} + \epsilon_t, \quad \epsilon_t \sim N(0, \sigma^2)$$</p>
+<h3 id="Income-Process">Income Process<a class="anchor-link" href="#Income-Process">¶</a></h3><h4 id="Stochastic-Income">Stochastic Income<a class="anchor-link" href="#Stochastic-Income">¶</a></h4><p>Labor productivity (income) follows a Markov process:</p>
+<p>$$\log z_t = \rho \log z_{t-1} + \epsilon_t, \quad \epsilon_t \sim N(0, \sigma^2)$$</p>
 <p>Can be discretized into:</p>
 <ul>
-<li>$y_t \in \{y_1, y_2, ..., y_N\}$ (finite states)</li>
-<li>Transition matrix $\Pi$ where $\Pi_{ij} = \Pr(y_{t+1} = y_j | y_t = y_i)$</li>
+<li>$z_t \in \{z_1, z_2, ..., z_N\}$ (finite states)</li>
+<li>Transition matrix $\Pi$ where $\Pi_{ij} = \Pr(z_{t+1} = z_j | z_t = z_i)$</li>
 </ul>
 <p><strong>Key feature</strong>: Households face <strong>uninsurable idiosyncratic risk</strong></p>
 <ul>
@@ -7659,6 +7660,7 @@ $$c = (1+r)a + y - a'$$</p>
 <p>$$ V'_a(a,y) = \beta (1+r)\mathbb{E}[V_a'(a',y')]+(1+r)\lambda$$</p>
 <p>Putting togethor we have</p>
 <p>$$ V_a'(a,y) = (1+r)u'(c)$$</p>
+<p>And our Euler equation</p>
 <p>$$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]+\lambda$$</p>
 </div>
 </div>
@@ -7678,8 +7680,10 @@ $$c = (1+r)a + y - a'$$</p>
 <ul>
 <li><p>Binding constraint ($\lambda&gt;0$)</p>
 <ul>
-<li>$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]+\lambda$</li>
-<li>implies consumption is below what agent would want</li>
+<li><p>$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]+\lambda$</p>
+</li>
+<li><p>implies consumption is below what agent would want</p>
+</li>
 </ul>
 </li>
 <li><p>Otherwise</p>
@@ -7725,9 +7729,7 @@ $$c = (1+r)a + y - a'$$</p>
 <h2 id="Value-Function-Iteration-(VFI)">Value Function Iteration (VFI)<a class="anchor-link" href="#Value-Function-Iteration-(VFI)">¶</a></h2><ul>
 <li><p>Algorithm (one backward step)</p>
 <ol>
-<li><p>For each (z, a) state, construct value for each possible a' choice on grid</p>
-</li>
-<li><p>Compute consumption: c = cash-on-hand - a'</p>
+<li><p>For each (z, a) state, construct V(z,a,a') value for each possible a' choice on grid</p>
 </li>
 <li><p>Calculate value: $V = u(c) + β E[V_{t+1}(z', a')]$</p>
 </li>
@@ -7773,7 +7775,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [138]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali</span><span class="o">=</span><span class="p">{}</span> <span class="c1"># calibration</span>
@@ -7794,7 +7796,7 @@ $$c = (1+r)a + y - a'$$</p>
 <span class="n">cali</span><span class="p">[</span><span class="s1">'govT'</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
 
 <span class="c1"># discretization</span>
-<span class="n">cali</span><span class="p">[</span><span class="s1">'nA'</span><span class="p">]</span><span class="o">=</span><span class="mi">250</span>
+<span class="n">cali</span><span class="p">[</span><span class="s1">'nA'</span><span class="p">]</span><span class="o">=</span><span class="mi">2000</span>
 <span class="n">cali</span><span class="p">[</span><span class="s1">'nZ'</span><span class="p">]</span><span class="o">=</span><span class="mi">5</span>
 <span class="n">cali</span><span class="p">[</span><span class="s1">'amax'</span><span class="p">]</span><span class="o">=</span><span class="mi">125</span>
 </pre></div>
@@ -7807,7 +7809,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [139]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">## Household problem</span>
@@ -7842,7 +7844,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [140]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">household_vfit_init</span><span class="p">(</span> <span class="n">r</span><span class="p">,</span> <span class="n">coh</span><span class="p">,</span> <span class="n">eis</span><span class="p">):</span> <span class="c1"># initial guess for marginal value function</span>
@@ -7946,7 +7948,7 @@ $$c = (1+r)a + y - a'$$</p>
 <ol>
 <li><p>For each (z,a') Compute expected marginal utility next period: $m = β E[(1+r') u'(c(z',a')))]$.</p>
 <ul>
-<li>$m(z,a')= \sum_{z'} prob(z'|z)(1+r')u'(c(z,a'))$</li>
+<li>$m(z,a')= \beta \sum_{z'} \Pi(z'|z)(1+r')u'(c(z,a'))$</li>
 </ul>
 </li>
 <li><p>Invert marginal utility to get c at each next-period asset grid point: $c(z,?) = m^{\frac{-1}{\sigma}}$.</p>
@@ -7994,7 +7996,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [142]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@het</span><span class="p">(</span><span class="n">exogenous</span><span class="o">=</span><span class="s1">'Pi'</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="s1">'Va'</span><span class="p">,</span> <span class="n">backward_init</span><span class="o">=</span><span class="n">household_init</span><span class="p">)</span>
@@ -8152,13 +8154,13 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Aggregate-Dynamics">Aggregate Dynamics<a class="anchor-link" href="#Aggregate-Dynamics">¶</a></h2><ul>
-<li><p>So far considered a model around it' steady state</p>
+<li><p>So far considered a model at it's steady state</p>
 </li>
 <li><p>Generally we want to think about aggregate dynamics</p>
 </li>
-<li><p>With HA models been common to use peturbation methods around steady state</p>
+<li><p>With HA models, now common to use peturbation methods around steady state to compute dynamic responses to shocks</p>
 <ul>
-<li>e.g. SGU method (Bayer et al,) or Sequence Space Jacobian (Auclert et al, 2021)</li>
+<li>e.g. SGU method (Bayer et al, 2024) or Sequence Space Jacobian (Auclert et al, 2021)</li>
 </ul>
 </li>
 <li><p>All rely on taking derivatives around steady state and solving for policy functions that maintain equlibrium equations.</p>
@@ -8167,7 +8169,7 @@ $$c = (1+r)a + y - a'$$</p>
 </div>
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=864f89d9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8179,9 +8181,10 @@ $$c = (1+r)a + y - a'$$</p>
 <p>$\tau_t=r_tB$</p>
 <p>$ \log{Z_t}=\rho \log{Z_{t-1}}+\epsilon_t$</p>
 <ul>
-<li>Fixed level of saving supported by government bonds $B$.</li>
+<li>Fixed level of saving supported by fixed issuance of government bonds $B$.</li>
 <li>Output fluctuates with aggregate TFP Process</li>
-<li>Interest rate fluctates to ensure saving supply equal demand</li>
+<li>Interest rate fluctuates to ensure savings supply equals demand</li>
+<li>Normalise such that $\int z_i di=1$</li>
 </ul>
 </div>
 </div>
@@ -8191,11 +8194,11 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [148]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@simple</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">wage</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wage</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span> 
     <span class="n">w</span><span class="o">=</span><span class="n">Z</span>
     <span class="n">Y</span><span class="o">=</span><span class="n">Z</span>
     <span class="k">return</span> <span class="n">w</span><span class="p">,</span><span class="n">Y</span>
@@ -8220,7 +8223,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [149]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali_full</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">cali</span><span class="p">)</span>
@@ -8253,8 +8256,8 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>r: 0.0037845711303797483
-Good_mkt: 6.207779845723849e-09
+<pre>r: 0.0038574596889343112
+Good_mkt: 5.67532842943308e-09
 </pre>
 </div>
 </div>
@@ -8268,6 +8271,14 @@ Good_mkt: 6.207779845723849e-09
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Response-to-a-1-pct-TFP-shock">Response to a 1 pct TFP shock<a class="anchor-link" href="#Response-to-a-1-pct-TFP-shock">¶</a></h2><p><img alt="TFP shock" src="hugget_dynamics.png"/></p>
+<ul>
+<li><p>Nature of shock means today is better than tomorrow</p>
+</li>
+<li><p>Households want to save more</p>
+</li>
+<li><p>Interest rate has to fall to bring saving demand into equilibrium with supply ($r^*$ falls)</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
