@@ -7435,6 +7435,32 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c5b82c73">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<style>
+.reveal pre code {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+    font-size: 0.75em;
+    line-height: 1.2;
+}
+.reveal section img {
+    border: none;
+    box-shadow: none;
+}
+.reveal .slides section .cell {
+    overflow-y: auto !important;
+    max-height: 600px !important;
+}
+</style>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f7ab7418">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7464,7 +7490,12 @@ main {
 <li><p>Examine the properties of a Hugget model</p>
 </li>
 </ul>
-<p><strong>Further reading</strong> - Ljungqvist and Sargent Recursive Macroeconmic Theory chapters: 17,18</p>
+<p><strong>Further reading</strong></p>
+<ul>
+<li>Ljungqvist and Sargent Recursive Macroeconmic Theory chapters: 17,18</li>
+<li>Auclert, A., Bardóczy, B., Rognlie, M., &amp; Straub, L. (2021). Using the sequence‐space Jacobian to solve and estimate heterogeneous‐agent models. Econometrica, 89(5), 2375-2408.</li>
+<li><a href="https://github.com/shade-econ/sequence-jacobian">https://github.com/shade-econ/sequence-jacobian</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -7775,7 +7806,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali</span><span class="o">=</span><span class="p">{}</span> <span class="c1"># calibration</span>
@@ -7809,7 +7840,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">## Household problem</span>
@@ -7844,7 +7875,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">household_vfit_init</span><span class="p">(</span> <span class="n">r</span><span class="p">,</span> <span class="n">coh</span><span class="p">,</span> <span class="n">eis</span><span class="p">):</span> <span class="c1"># initial guess for marginal value function</span>
@@ -7996,7 +8027,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@het</span><span class="p">(</span><span class="n">exogenous</span><span class="o">=</span><span class="s1">'Pi'</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="s1">'Va'</span><span class="p">,</span> <span class="n">backward_init</span><span class="o">=</span><span class="n">household_init</span><span class="p">)</span>
@@ -8194,7 +8225,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [58]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@simple</span>
@@ -8223,7 +8254,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali_full</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">cali</span><span class="p">)</span>
