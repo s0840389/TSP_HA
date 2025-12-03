@@ -7442,16 +7442,44 @@ main {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <style>
+/* Target code blocks */
+.reveal pre {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
+
 .reveal pre code {
     max-height: 500px !important;
     overflow-y: auto !important;
     font-size: 0.75em;
     line-height: 1.2;
 }
+
+/* Target the actual cell output containers */
+.reveal .output_area pre {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
+
+/* Target all code output */
+.reveal .output_subarea {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
+
+/* Target input cells specifically */
+.reveal .input_area {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
+
+/* Images stay clean */
 .reveal section img {
     border: none;
     box-shadow: none;
 }
+
+/* Entire cell container */
 .reveal .slides section .cell {
     overflow-y: auto !important;
     max-height: 600px !important;
@@ -7467,7 +7495,7 @@ main {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="TSP-Lecture---HA-Models">TSP Lecture - HA Models<a class="anchor-link" href="#TSP-Lecture---HA-Models">¶</a></h1><p>Jamie Lenney</p>
+<h1 id="TSP-Lecture---Heterogeanous-Agent-Models">TSP Lecture - Heterogeanous Agent Models<a class="anchor-link" href="#TSP-Lecture---Heterogeanous-Agent-Models">¶</a></h1><p>Jamie Lenney</p>
 <p>Dec 2025</p>
 <p>Code/slides: <a href="https://github.com/s0840389/TSP_HA">https://github.com/s0840389/TSP_HA</a></p>
 </div>
@@ -7485,7 +7513,7 @@ main {
 </li>
 <li><p>Understand how income risk and borrowing constraints underpin HA model mechanisms</p>
 </li>
-<li><p>Know how to solve a HA</p>
+<li><p>Know how to solve a HA model</p>
 </li>
 <li><p>Examine the properties of a Hugget model</p>
 </li>
@@ -7511,7 +7539,7 @@ main {
 <li><p>Can think of a representative agent model as a model where individuals have written contracts to hedge against all risk</p>
 <ul>
 <li>They are still exposed to aggregate risk</li>
-<li>Can still have complete markets models with wealth distribution but all agents consumption would move proportinally in the same way.</li>
+<li>Can still have complete markets models with wealth distribution but all agents consumption would move proportionally in the same way.</li>
 </ul>
 </li>
 <li><p>When this is not possible we have incomplete markets</p>
@@ -7686,13 +7714,13 @@ $$c = (1+r)a + y - a'$$</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="First-Order-Conditions">First Order Conditions<a class="anchor-link" href="#First-Order-Conditions">¶</a></h3><h4 id="Lagrangian">Lagrangian<a class="anchor-link" href="#Lagrangian">¶</a></h4><p>$$\mathcal{L} = u(c) + \beta \mathbb{E}[V(a')] + \lambda(a' - \underline{a})$$</p>
 <p>Derivative of $\mathcal{L}$ wrpt to $a'$</p>
-<p>$$0 = -u'(c) +\beta \mathbb{E}[V_a'(a',y')] +\lambda $$</p>
+<p>$$0 = -u_c(c) +\beta \mathbb{E}[V_a(a',y')] +\lambda $$</p>
 <p>Derivative of $V(a,y)$ wrpt to $a$</p>
-<p>$$ V'_a(a,y) = \beta (1+r)\mathbb{E}[V_a'(a',y')]+(1+r)\lambda$$</p>
+<p>$$ V_a(a,y) = \beta (1+r)\mathbb{E}[V_a(a',y')]+(1+r)\lambda$$</p>
 <p>Putting togethor we have</p>
-<p>$$ V_a'(a,y) = (1+r)u'(c)$$</p>
+<p>$$ V_a(a,y) = (1+r)u_c(c)$$</p>
 <p>And our Euler equation</p>
-<p>$$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]+\lambda$$</p>
+<p>$$ u_c(c)  = \beta \mathbb{E}[(1+r')u_c(c')]+\lambda$$</p>
 </div>
 </div>
 </div>
@@ -7711,7 +7739,7 @@ $$c = (1+r)a + y - a'$$</p>
 <ul>
 <li><p>Binding constraint ($\lambda&gt;0$)</p>
 <ul>
-<li><p>$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]+\lambda$</p>
+<li><p>$ u_c(c)  = \beta \mathbb{E}[(1+r')u_c(c')]+\lambda$</p>
 </li>
 <li><p>implies consumption is below what agent would want</p>
 </li>
@@ -7719,7 +7747,7 @@ $$c = (1+r)a + y - a'$$</p>
 </li>
 <li><p>Otherwise</p>
 <ul>
-<li>$ u'(c)  = \beta \mathbb{E}[(1+r')u'(c')]$</li>
+<li>$ u_c(c)  = \beta \mathbb{E}[(1+r')u_c(c')]$</li>
 </ul>
 </li>
 </ul>
@@ -7806,7 +7834,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [48]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali</span><span class="o">=</span><span class="p">{}</span> <span class="c1"># calibration</span>
@@ -7840,7 +7868,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">## Household problem</span>
@@ -7875,7 +7903,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [50]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">household_vfit_init</span><span class="p">(</span> <span class="n">r</span><span class="p">,</span> <span class="n">coh</span><span class="p">,</span> <span class="n">eis</span><span class="p">):</span> <span class="c1"># initial guess for marginal value function</span>
@@ -7957,9 +7985,9 @@ $$c = (1+r)a + y - a'$$</p>
 <ul>
 <li><p>Use Euler equation to compute optimal consumption on the <em>next-period</em> grid of assets (endogenous grid), then recover the implied current assets.</p>
 </li>
-<li><p>For CRRA utility: $u'(c) = c^{-\sigma}$.</p>
+<li><p>For CRRA utility: $u_c(c) = c^{-\sigma}$.</p>
 </li>
-<li><p>Euler gives $u'(c_t) = β(1+r) E[u'(c_{t+1})]$  ⇒  $c_t = [β(1+r) E[u'(c_{t+1})]]^{\frac{-1}{\sigma}}$</p>
+<li><p>Euler gives $u_c(c_t) = β(1+r) E[u_c(c_{t+1})]$  ⇒  $c_t = [β(1+r) E[u_c(c_{t+1})]]^{\frac{-1}{\sigma}}$</p>
 </li>
 </ul>
 </li>
@@ -8027,7 +8055,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [52]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@het</span><span class="p">(</span><span class="n">exogenous</span><span class="o">=</span><span class="s1">'Pi'</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s1">'a'</span><span class="p">,</span> <span class="n">backward</span><span class="o">=</span><span class="s1">'Va'</span><span class="p">,</span> <span class="n">backward_init</span><span class="o">=</span><span class="n">household_init</span><span class="p">)</span>
@@ -8163,6 +8191,11 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><img alt="Aggregate Savings diff bc" src="equilibrium_interest_rate_vs_aggregate_assets.png"/></p>
+<ul>
+<li>Solving the model for different interest rates</li>
+<li>Aggregate asset demand increasing in the interest rate</li>
+<li>The more assets the more we move towards complete markets benchmark</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8174,6 +8207,9 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><img alt="Aggregate Savings diff bc" src="aggregate_assets_borrowing_constraints.png"/></p>
+<ul>
+<li>Loosening borrowing constraints shifts in the asset demand curve</li>
+</ul>
 </div>
 </div>
 </div>
@@ -8188,6 +8224,10 @@ $$c = (1+r)a + y - a'$$</p>
 <li><p>So far considered a model at it's steady state</p>
 </li>
 <li><p>Generally we want to think about aggregate dynamics</p>
+<ul>
+<li>Theoretically under rational expecations this is basiclay impossible</li>
+<li>But under some reasonable assumptions we have methods that maket this feasible</li>
+</ul>
 </li>
 <li><p>With HA models, now common to use peturbation methods around steady state to compute dynamic responses to shocks</p>
 <ul>
@@ -8215,6 +8255,7 @@ $$c = (1+r)a + y - a'$$</p>
 <li>Fixed level of saving supported by fixed issuance of government bonds $B$.</li>
 <li>Output fluctuates with aggregate TFP Process</li>
 <li>Interest rate fluctuates to ensure savings supply equals demand</li>
+<li>Government pays for interest payment with a lump sum tax on all households</li>
 <li>Normalise such that $\int z_i di=1$</li>
 </ul>
 </div>
@@ -8225,7 +8266,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [58]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="nd">@simple</span>
@@ -8254,7 +8295,7 @@ $$c = (1+r)a + y - a'$$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cali_full</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">cali</span><span class="p">)</span>
@@ -8309,6 +8350,22 @@ Good_mkt: 5.67532842943308e-09
 </li>
 <li><p>Interest rate has to fall to bring saving demand into equilibrium with supply ($r^*$ falls)</p>
 </li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=644f3ac5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Response-to-a-1-pct-TFP-News-shock">Response to a 1 pct TFP News shock<a class="anchor-link" href="#Response-to-a-1-pct-TFP-News-shock">¶</a></h2><p><img alt="TFP shock" src="hugget_dynamics_news.png"/></p>
+<ul>
+<li>Same shock only anticpated 6 quarters in advance</li>
+<li>Nature of shock means that tomorrows is better than today</li>
+<li>Households want to save less (higher $r^*$)</li>
 </ul>
 </div>
 </div>
