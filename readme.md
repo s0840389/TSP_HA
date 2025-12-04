@@ -6,3 +6,5 @@
     - HA methods for solving a Hugget model
 
 * Code leverages sequence space package https://github.com/shade-econ/sequence-jacobian
+
+* Also provided some matlab code in Hugget_Matlab
