@@ -126,5 +126,13 @@ while abs(init) > crit
 end
 toc
 
+figure;
+bar(grid_a,sum(distr,2))
+title('Wealth dist.')
 
+c=-reshape(grid_a(policy_ind),na,5)+grid_a'*(1+r)+grid_s*w+tau;
+
+figure;
+plot(grid_a,c)
+title('consumption policy')
 
