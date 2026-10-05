@@ -1,0 +1,161 @@
+{%- extends 'reveal/index.html.j2' -%}
+{#
+  Bank of England slide template for `jupyter nbconvert --to slides`.
+  - navy title bar on every slide (the first heading of the slide is moved into it)
+  - BoE roundel watermark, footer with slide number, navy title slide
+  - content is scaled to fit the 1280x720 slide so HTML and PDF match (one PDF page per slide)
+  Build with ./build_slides.sh
+#}
+
+{% block notebook_css %}
+{{ super() }}
+{{ resources.include_css("static/boe_assets.css") }}
+{{ resources.include_css("static/boe.css") }}
+{% endblock notebook_css %}
+
+{% block html_head_css %}
+<!-- Automatic line-breaking splits inline maths awkwardly on slides; keep equations whole -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({ CommonHTML: { linebreaks: { automatic: false } }, "HTML-CSS": { linebreaks: { automatic: false } } });
+</script>
+{% endblock html_head_css %}
+
+{% block footer_js %}
+<script>
+(function () {
+  var FOOTER_LEFT = '<strong>Bank of England</strong>&nbsp;&nbsp;|&nbsp;&nbsp;Centre for Central Bank Studies';
+  var MIN_SCALE = 0.55;
+
+  function headingText(h) {
+    var c = h.cloneNode(true);
+    c.querySelectorAll('.anchor-link').forEach(function (a) { a.remove(); });
+    return c.innerHTML.trim();
+  }
+
+  // Wrap each slide's cells in a frame: bar + body + watermark + footer.
+  function buildFrames() {
+    // nbconvert nests slides as <section><section>cells</section></section>; frame the innermost ones.
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.reveal .slides section'))
+      .filter(function (s) { return !s.querySelector('section'); });
+    var lastTitle = '';
+    sections.forEach(function (sec, i) {
+      sec.classList.add('boe-slide');
+      var body = document.createElement('div');
+      body.className = 'boe-body';
+      var inner = document.createElement('div');
+      inner.className = 'boe-inner';
+      while (sec.firstChild) inner.appendChild(sec.firstChild);
+      body.appendChild(inner);
+
+      var bar = document.createElement('header');
+      bar.className = 'boe-bar';
+      var title = document.createElement('div');
+      title.className = 'boe-bar-title';
+      bar.appendChild(title);
+
+      if (i === 0) {
+        sec.classList.add('boe-title');
+      } else {
+        // Promote the slide's first heading into the bar if it opens the slide.
+        var first = inner.querySelector('.jp-MarkdownOutput > :first-child');
+        if (first && /^H[1-3]$/.test(first.tagName)) {
+          lastTitle = headingText(first);
+          title.innerHTML = lastTitle;
+          first.remove();
+        } else if (inner.querySelector('.jp-CodeCell')) {
+          title.innerHTML = lastTitle + ' <span class="boe-sub">&ndash; code</span>';
+        } else {
+          title.innerHTML = lastTitle;
+        }
+        // Figure-only slides get a larger image.
+        var md = inner.querySelector('.jp-MarkdownOutput');
+        if (md && md.children.length === 1 && md.querySelector('img')) md.classList.add('boe-img-only');
+      }
+
+      var wm = document.createElement('div');
+      wm.className = 'boe-watermark';
+
+      var foot = document.createElement('footer');
+      foot.className = 'boe-footer';
+      foot.innerHTML = '<span>' + FOOTER_LEFT + '</span><span>' + (i + 1) + '</span>';
+
+      sec.appendChild(bar);
+      sec.appendChild(wm);
+      sec.appendChild(body);
+      sec.appendChild(foot);
+    });
+    return sections;
+  }
+
+  // Scale a slide's content down (CSS zoom) until it fits the body area.
+  function fitSection(sec) {
+    var body = sec.querySelector('.boe-body');
+    var inner = sec.querySelector('.boe-inner');
+    if (!body || !inner) return;
+    inner.style.zoom = 1;
+    var avail = body.clientHeight, need = inner.scrollHeight;
+    var availW = body.clientWidth, needW = inner.scrollWidth;
+    var s = Math.min(1, avail / need, availW / needW);
+    if (s < 1) {
+      s = Math.max(MIN_SCALE, Math.floor(s * 100) / 100);
+      inner.style.zoom = s;
+      // second pass: text reflow can change the height after zooming
+      if (inner.scrollHeight * 1 > avail && s > MIN_SCALE) {
+        s = Math.max(MIN_SCALE, Math.floor(s * avail / inner.scrollHeight * 100) / 100);
+        inner.style.zoom = s;
+      }
+    }
+    body.classList.toggle('boe-overflow', inner.scrollHeight > body.clientHeight + 1);
+  }
+
+  function fitAll(sections) {
+    sections.forEach(function (sec) {
+      var prev = sec.style.display;
+      sec.style.display = 'block';
+
+      fitSection(sec);
+      sec.style.display = prev;
+    });
+  }
+
+  var sections = buildFrames();
+
+  require(
+    { waitSeconds: 30 },
+    ["{{ reveal_url_prefix }}/dist/reveal.js", "{{ reveal_url_prefix }}/plugin/notes/notes.js"],
+    function (Reveal, RevealNotes) {
+      var started = false;
+      function start() {
+        if (started) return;
+        started = true;
+        fitAll(sections);
+        document.documentElement.classList.add('boe-ready');
+        Reveal.initialize({
+          controls: true,
+          controlsLayout: 'edges',
+          progress: true,
+          history: true,
+          center: false,
+          margin: 0,
+          transition: "{{ resources.reveal.transition | default('fade', true) }}",
+          slideNumber: false,
+          pdfMaxPagesPerSlide: 1,
+          pdfPageHeightOffset: 0,
+          pdfSeparateFragments: false,
+          plugins: [RevealNotes],
+          width: 1280,
+          height: 720
+        });
+      }
+      // Lay out only after MathJax has typeset, so heights are final.
+      if (window.MathJax && MathJax.Hub) {
+        MathJax.Hub.Queue(start);
+        setTimeout(start, 15000);   // never hang if MathJax stalls
+      } else {
+        start();
+      }
+    }
+  );
+})();
+</script>
+{% endblock footer_js %}
